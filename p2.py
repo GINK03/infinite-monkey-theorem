@@ -11,6 +11,11 @@ import json
 
 import os
 
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--conc', help='speficy concurrent number')
+args = parser.parse_args()
+
 hostname = os.popen('hostname').read().strip()
 
 katas = "ァ 	ア 	ィ 	イ 	ゥ 	ウ 	ェ 	エ 	ォ 	オ 	カ 	ガ 	キ 	ギ 	ク 	グ 	ケ 	ゲ 	コ 	ゴ 	サ 	ザ 	シ 	ジ 	ス 	ズ 	セ 	ゼ 	ソ 	ゾ 	タ 	ダ 	チ 	ヂ 	ッ 	ツ 	ヅ 	テ 	デ 	ト 	ド 	ナ 	ニ 	ヌ 	ネ 	ノ 	ハ 	バ 	パ 	ヒ 	ビ 	ピ 	フ 	ブ 	プ 	ヘ 	ベ 	ペ 	ホ 	ボ 	ポ 	マ 	ミ 		ム 	メ 	モ 	ャ 	ヤ 	ュ 	ユ 	ョ 	ヨ 	ラ 	リ 	ル 	レ 	ロ 	ヮ 	ワ 	ヰ 	ヱ 	ヲ 	ン 	ヴ 	ヵ ヶ"
@@ -27,7 +32,7 @@ max_index = max(index_char.keys())
 def _map(index):
   np.random.seed(int(random.random()*100))
   for i in range(10000000):
-    monkey = np.random.randint(max_index, size=(100000000,7))
+    monkey = np.random.randint(max_index, size=(10000000,7))
     delta = monkey - answer
     nz = np.count_nonzero(delta, axis=1)
     mi = np.argmin(nz)
@@ -39,5 +44,5 @@ def _map(index):
 
 indexies = [i for i in range(10000)]
 #_map(0)
-with concurrent.futures.ProcessPoolExecutor(max_workers=16) as exe:
+with concurrent.futures.ProcessPoolExecutor(max_workers=int(args.conc)) as exe:
   exe.map(_map,  indexies)

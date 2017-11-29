@@ -4,6 +4,7 @@ import json
 
 import sys
 
+import os
 if '--p1' in sys.argv:
   for name in glob.glob('monkey/*.json'):
     _ma_mo = json.loads( open( name ).read() )
@@ -23,3 +24,6 @@ if '--p2' in sys.argv:
       indexies = obj['monkey']
       words = [ index_char[str(i)] for i in indexies ]
       print(s, '文字一致', ''.join(words) )
+    else:
+      os.remove(name)
+      print('remove', name)
