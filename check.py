@@ -16,11 +16,11 @@ if '--p1' in sys.argv:
     print( ma )
 
 if '--p2' in sys.argv:
-  index_char = json.loads( open('./index_char.json').read() )
-  for name in glob.glob('monkey.p2/*.json'):
+  index_char = json.load( open('index_char.json') )
+  for name in glob.glob('monkey_work/*.json'):
     obj = json.loads( open( name ).read() )
     s = obj['sum']
-    if s >= 6:
+    if s >= 5:
       indexies = obj['monkey']
       words = [ index_char[str(i)] for i in indexies ]
       print(s, '文字一致', ''.join(words) )
